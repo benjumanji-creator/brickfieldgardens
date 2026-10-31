@@ -561,16 +561,21 @@
 
 
   /* ====== CONTACT ====== */
-  var CONTACT_TEL = "+15133415163";
-  var CONTACT_DISPLAY = "(513) 341-5163";
-  document.getElementById("cnumber").textContent = CONTACT_DISPLAY;
-  document.getElementById("contact-text").href = "sms:" + CONTACT_TEL;
-  document.getElementById("contact-call").href = "tel:" + CONTACT_TEL;
+  // Number is assembled only when the pop-up opens, so it isn't sitting in the page source.
+  var CONTACT_PARTS = ["NTEz", "MzQx", "NTE2", "Mw=="];
+  function contactDigits() { return atob(CONTACT_PARTS.join("")); }
+  function fillContact() {
+    var d = contactDigits();
+    document.getElementById("cnumber").textContent = "(" + d.slice(0, 3) + ") " + d.slice(3, 6) + "-" + d.slice(6);
+    document.getElementById("contact-text").href = "sms:+1" + d;
+    document.getElementById("contact-call").href = "tel:+1" + d;
+  }
   var cmodal = document.getElementById("cmodal");
   var lastContactTrigger = null;
   function openContact(e) {
     e.preventDefault();
     lastContactTrigger = e.currentTarget;
+    fillContact();
     cmodal.classList.add("open");
     cmodal.setAttribute("aria-hidden", "false");
     document.getElementById("cclose").focus();
