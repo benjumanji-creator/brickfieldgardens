@@ -335,6 +335,15 @@
   }
   .fallback a { color: #fff; }
 
+
+  /* Apply chooser */
+  #amodal { z-index: 20; }
+  .apply-panel { max-width: 460px; }
+  .apply-panel p { margin: 0 0 16px; color: #d6d1c9; font-size: .98rem; line-height: 1.45; }
+  .apply-choices { display: grid; gap: 12px; }
+  .apply-choices .btn { width: 100%; justify-content: center; text-align: center; }
+  .apply-note { margin: 16px 0 0 !important; font-size: .85rem !important; color: #a9a49b !important; }
+
   /* Photo gallery */
   .gallery-panel { max-width: 1040px; }
   .stage {
@@ -436,7 +445,7 @@
         <div class="actions">
           <button class="btn btn-primary" id="watch" type="button">▶ Watch the walkthrough</button>
           <button class="btn btn-outline" id="photos" type="button">Photo gallery</button>
-          <a class="btn btn-outline" data-apply href="#" target="_blank" rel="noopener">Apply Now</a>
+          <a class="btn btn-outline" data-apply href="#" role="button">Apply Now</a>
         </div>
       </div>
 
@@ -468,7 +477,7 @@
     </div>
     <div class="panel-foot">
       <p class="fallback">Having trouble with the player? <a id="fallback" href="#" target="_blank" rel="noopener">Open the video in a new tab ↗</a></p>
-      <a class="btn btn-primary" data-apply href="#" target="_blank" rel="noopener">Apply Now</a>
+      <a class="btn btn-primary" data-apply href="#" role="button">Apply Now</a>
     </div>
   </div>
 </div>
@@ -487,8 +496,23 @@
     <div class="thumbs" id="gthumbs"></div>
     <div class="gallery-foot">
       <span class="counter" id="gcount"></span>
-      <a class="btn btn-primary" data-apply href="#" target="_blank" rel="noopener">Apply Now</a>
+      <a class="btn btn-primary" data-apply href="#" role="button">Apply Now</a>
     </div>
+  </div>
+</div>
+
+<div class="modal" id="amodal" role="dialog" aria-modal="true" aria-labelledby="amodal-title" aria-hidden="true">
+  <div class="panel apply-panel">
+    <div class="panel-head">
+      <h2 id="amodal-title">Apply for Unit 1</h2>
+      <button class="close" id="aclose" type="button" aria-label="Close">×</button>
+    </div>
+    <p>Choose where you'd like to apply. If you've already set up or paid for an application on one of these sites, apply there.</p>
+    <div class="apply-choices">
+      <a class="btn btn-primary" id="apply-zillow" href="#" target="_blank" rel="noopener">Apply on Zillow</a>
+      <a class="btn btn-primary" id="apply-apts" href="#" target="_blank" rel="noopener">Apply on Apartments.com</a>
+    </div>
+    <p class="apply-note">Each site runs its own application and charges its own fee. You'll apply on their site, not here.</p>
   </div>
 </div>
 
@@ -499,15 +523,42 @@
   var VIDEO_EMBED    = "https://www.youtube-nocookie.com/embed/S_YV4sqK-KY?autoplay=1&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3";
   // Normal "view" link, used for the fallback
   var VIDEO_FALLBACK = "https://youtu.be/S_YV4sqK-KY";
-  // Your Apartments.com listing / application link
-  var APPLY_URL      = "https://www.apartments.com/6035-oakwood-ave-cincinnati-oh/bf8jth8/";
+  // Where people can apply
+  var ZILLOW_URL     = "https://www.zillow.com/homedetails/6035-Oakwood-Ave-1-Cincinnati-OH-45224/466318567_zpid/?view=public";
+  var APARTMENTS_URL = "https://www.apartments.com/6035-oakwood-ave-cincinnati-oh/bf8jth8/";
   /* ==================================== */
 
   var modal = document.getElementById("modal");
   var player = document.getElementById("player");
   var watchBtn = document.getElementById("watch");
 
-  document.querySelectorAll("[data-apply]").forEach(function (a) { a.href = APPLY_URL; });
+  document.getElementById("apply-zillow").href = ZILLOW_URL;
+  document.getElementById("apply-apts").href = APARTMENTS_URL;
+
+  /* ====== APPLY CHOOSER ====== */
+  var amodal = document.getElementById("amodal");
+  var lastApplyTrigger = null;
+  function openApply(e) {
+    e.preventDefault();
+    lastApplyTrigger = e.currentTarget;
+    amodal.classList.add("open");
+    amodal.setAttribute("aria-hidden", "false");
+    document.getElementById("aclose").focus();
+    document.body.style.overflow = "hidden";
+  }
+  function closeApply(byKey) {
+    amodal.classList.remove("open");
+    amodal.setAttribute("aria-hidden", "true");
+    var other = document.querySelector("#modal.open, #gmodal.open");
+    if (!other) document.body.style.overflow = "";
+    if (byKey === true && lastApplyTrigger) lastApplyTrigger.focus();
+  }
+  document.querySelectorAll("[data-apply]").forEach(function (a) { a.addEventListener("click", openApply); });
+  document.getElementById("aclose").addEventListener("click", function () { closeApply(); });
+  amodal.addEventListener("click", function (e) { if (e.target === amodal) closeApply(); });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && amodal.classList.contains("open")) { closeApply(true); e.stopImmediatePropagation(); }
+  }, true);
   document.getElementById("fallback").href = VIDEO_FALLBACK;
 
   function openModal() {
