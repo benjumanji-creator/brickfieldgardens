@@ -336,6 +336,13 @@
   .fallback a { color: #fff; }
 
 
+
+  /* Contact */
+  .contact-line { margin: 12px 0 0; text-align: center; font-size: .95rem; }
+  .contact-line a { color: inherit; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
+  #cmodal { z-index: 20; }
+  .contact-number { font: 700 1.5rem/1.2 var(--sans); text-align: center; margin: 0 0 16px !important; color: #fff !important; letter-spacing: .01em; }
+
   /* Apply chooser */
   #amodal { z-index: 20; }
   .apply-panel { max-width: 460px; }
@@ -447,6 +454,7 @@
           <button class="btn btn-outline" id="photos" type="button">Photo gallery</button>
           <a class="btn btn-outline" data-apply href="#" role="button">Apply Now</a>
         </div>
+        <p class="contact-line">Questions or want to see it? <a href="#" data-contact role="button">Text or call us</a></p>
       </div>
 
       <div class="unit taken" aria-disabled="true">
@@ -516,6 +524,22 @@
   </div>
 </div>
 
+<div class="modal" id="cmodal" role="dialog" aria-modal="true" aria-labelledby="cmodal-title" aria-hidden="true">
+  <div class="panel apply-panel">
+    <div class="panel-head">
+      <h2 id="cmodal-title">Questions or a walk-through?</h2>
+      <button class="close" id="cclose" type="button" aria-label="Close">×</button>
+    </div>
+    <p>Text or call anytime. If we miss you, leave a message and we'll get back to you as soon as we can.</p>
+    <p class="contact-number" id="cnumber"></p>
+    <div class="apply-choices">
+      <a class="btn btn-primary" id="contact-text" href="#">Send a text</a>
+      <a class="btn btn-primary" id="contact-call" href="#">Call</a>
+    </div>
+    <p class="apply-note">Brickfield Garden Properties</p>
+  </div>
+</div>
+
 <script>
   /* ====== EDIT THESE THREE LINES ====== */
   // Google Drive: https://drive.google.com/file/d/FILE_ID/preview
@@ -534,6 +558,36 @@
 
   document.getElementById("apply-zillow").href = ZILLOW_URL;
   document.getElementById("apply-apts").href = APARTMENTS_URL;
+
+
+  /* ====== CONTACT ====== */
+  var CONTACT_TEL = "+15133415163";
+  var CONTACT_DISPLAY = "(513) 341-5163";
+  document.getElementById("cnumber").textContent = CONTACT_DISPLAY;
+  document.getElementById("contact-text").href = "sms:" + CONTACT_TEL;
+  document.getElementById("contact-call").href = "tel:" + CONTACT_TEL;
+  var cmodal = document.getElementById("cmodal");
+  var lastContactTrigger = null;
+  function openContact(e) {
+    e.preventDefault();
+    lastContactTrigger = e.currentTarget;
+    cmodal.classList.add("open");
+    cmodal.setAttribute("aria-hidden", "false");
+    document.getElementById("cclose").focus();
+    document.body.style.overflow = "hidden";
+  }
+  function closeContact(byKey) {
+    cmodal.classList.remove("open");
+    cmodal.setAttribute("aria-hidden", "true");
+    if (!document.querySelector("#modal.open, #gmodal.open, #amodal.open")) document.body.style.overflow = "";
+    if (byKey === true && lastContactTrigger) lastContactTrigger.focus();
+  }
+  document.querySelectorAll("[data-contact]").forEach(function (a) { a.addEventListener("click", openContact); });
+  document.getElementById("cclose").addEventListener("click", function () { closeContact(); });
+  cmodal.addEventListener("click", function (e) { if (e.target === cmodal) closeContact(); });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && cmodal.classList.contains("open")) { closeContact(true); e.stopImmediatePropagation(); }
+  }, true);
 
   /* ====== APPLY CHOOSER ====== */
   var amodal = document.getElementById("amodal");
