@@ -31,33 +31,40 @@
   }
   * { box-sizing: border-box; }
   html, body { height: 100%; margin: 0; }
+  html { scroll-behavior: smooth; }
+  #units { scroll-margin-top: 90px; }
   body {
     background: #234a33;
     color: var(--ink);
     font-family: var(--sans);
   }
 
-  /* Logo header */
+  /* Site header */
   .site-header {
-    position: absolute;
-    top: 0; left: 0; right: 0;
+    position: relative;
     z-index: 5;
-    padding: clamp(16px, 2.4vw, 32px) clamp(24px, 5vw, 72px);
-    pointer-events: none;
+    background: #0f3321;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    padding: 12px clamp(20px, 5vw, 72px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
   }
-  .site-header a { display: inline-block; pointer-events: auto; }
-  .site-header img {
-    display: block;
-    width: clamp(220px, 26vw, 380px);
-    height: auto;
-    filter: drop-shadow(0 2px 10px rgba(0,0,0,.45));
+  .site-header .brand { display: block; line-height: 0; }
+  .site-header .brand img { display: block; width: clamp(210px, 24vw, 330px); height: auto; }
+  .site-nav { display: flex; align-items: center; gap: clamp(18px, 3vw, 44px); }
+  .site-nav a {
+    color: #fff; text-decoration: none; font: 500 1.05rem/1 var(--sans);
+    padding: 10px 2px; border-bottom: 2px solid transparent;
   }
+  .site-nav a:hover, .site-nav a:focus-visible { border-bottom-color: rgba(255,255,255,.7); }
 
   /* Hero */
   .hero {
     position: relative;
-    min-height: 100vh;
-    min-height: 100svh;
+    min-height: calc(100vh - 128px);
+    min-height: calc(100svh - 128px);
     display: flex;
     align-items: flex-end;
     overflow: hidden;
@@ -438,18 +445,24 @@
     .hero img { object-fit: cover; object-position: 50% 50%; transform: scale(1.14); transform-origin: 30% 85%; }
     .hero::after { display: none; }
     .hero-content { padding: 22px 18px 40px; }
-    .site-header { position: relative; padding: 14px 18px; }
-    .site-header img { width: min(280px, 78vw); filter: none; }
+    .site-header { padding: 10px 16px; }
+    .site-header .brand img { width: min(190px, 52vw); }
+    .site-nav { gap: 16px; }
+    .site-nav a { font-size: .92rem; }
   }
 </style>
 </head>
 <body>
 
 <header class="site-header">
-  <a href="/" aria-label="Brickfield Garden Properties"><img src="logo.png" width="1000" height="315" alt="Brickfield Garden Properties"></a>
+  <a class="brand" href="#top" aria-label="Brickfield Garden Properties"><img src="logo.png" width="1000" height="315" alt="Brickfield Garden Properties"></a>
+  <nav class="site-nav" aria-label="Main">
+    <a href="#units">Properties</a>
+    <a href="#" data-contact role="button">Contact</a>
+  </nav>
 </header>
 
-<main class="hero">
+<main class="hero" id="top">
   <div class="hero-photo">
   <img src="oak-01.jpg" alt="Brick building with screened porches, a red front door, mature trees and a garden out front">
   </div>
@@ -463,7 +476,7 @@
       <li>Wide, tree-lined street</li>
     </ul>
     <!-- Side by side: Unit 1 (available) on the left, Unit 2 (rented) on the right -->
-    <div class="units">
+    <div class="units" id="units">
       <div class="unit open">
         <span class="badge badge-open">Available 11/15/26</span>
         <p class="unit-line">
