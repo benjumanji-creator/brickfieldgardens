@@ -37,6 +37,22 @@
     font-family: var(--sans);
   }
 
+  /* Logo header */
+  .site-header {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    z-index: 5;
+    padding: clamp(16px, 2.4vw, 32px) clamp(24px, 5vw, 72px);
+    pointer-events: none;
+  }
+  .site-header a { display: inline-block; pointer-events: auto; }
+  .site-header img {
+    display: block;
+    width: clamp(220px, 26vw, 380px);
+    height: auto;
+    filter: drop-shadow(0 2px 10px rgba(0,0,0,.45));
+  }
+
   /* Hero */
   .hero {
     position: relative;
@@ -422,10 +438,16 @@
     .hero img { object-fit: cover; object-position: 50% 50%; transform: scale(1.14); transform-origin: 30% 85%; }
     .hero::after { display: none; }
     .hero-content { padding: 22px 18px 40px; }
+    .site-header { position: relative; padding: 14px 18px; }
+    .site-header img { width: min(280px, 78vw); filter: none; }
   }
 </style>
 </head>
 <body>
+
+<header class="site-header">
+  <a href="/" aria-label="Brickfield Garden Properties"><img src="logo.png" width="1000" height="315" alt="Brickfield Garden Properties"></a>
+</header>
 
 <main class="hero">
   <div class="hero-photo">
