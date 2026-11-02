@@ -41,11 +41,11 @@
 
   /* Site header */
   .site-header {
-    position: relative;
+    position: absolute;
+    top: 0; left: 0; right: 0;
     z-index: 5;
-    background: #0f3321;
-    border-bottom: 1px solid rgba(255,255,255,.08);
-    padding: 12px clamp(20px, 5vw, 72px);
+    background: rgba(15,51,33,.95);
+    padding: 10px clamp(20px, 5vw, 72px) 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -63,8 +63,8 @@
   /* Hero */
   .hero {
     position: relative;
-    min-height: calc(100vh - 128px);
-    min-height: calc(100svh - 128px);
+    min-height: 100vh;
+    min-height: 100svh;
     display: flex;
     align-items: flex-end;
     overflow: hidden;
@@ -364,7 +364,16 @@
   .contact-line { margin: 12px 0 0; text-align: center; font-size: .95rem; }
   .contact-line a { color: inherit; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
   #cmodal { z-index: 20; }
-  .contact-number { font: 700 1.5rem/1.2 var(--sans); text-align: center; margin: 0 0 16px !important; color: #fff !important; letter-spacing: .01em; }
+  .contact-block { text-align: center; margin: 0 0 18px; }
+  .contact-block p { margin: 0 !important; }
+  .contact-label { font: 600 .72rem/1 var(--sans) !important; letter-spacing: .18em; text-transform: uppercase; color: #a9a49b !important; margin-bottom: 8px !important; }
+  .contact-number { font: 700 1.7rem/1.2 var(--sans) !important; color: #fff !important; letter-spacing: .01em; }
+  .contact-email { font: 600 1.1rem/1.3 var(--sans) !important; word-break: break-all; }
+  .contact-email a { color: #fff; text-underline-offset: 3px; }
+  .contact-sub { font-size: .92rem !important; color: #d6d1c9 !important; margin-top: 6px !important; }
+  .contact-sub a { color: #fff; font-weight: 700; text-underline-offset: 3px; }
+  #cmodal .apply-note { text-align: center; }
+  .contact-miss { text-align: center; margin: 4px 0 0 !important; font-size: .85rem !important; color: #a9a49b !important; }
 
   /* Apply chooser */
   #amodal { z-index: 20; }
@@ -445,7 +454,7 @@
     .hero img { object-fit: cover; object-position: 50% 50%; transform: scale(1.14); transform-origin: 30% 85%; }
     .hero::after { display: none; }
     .hero-content { padding: 22px 18px 40px; }
-    .site-header { padding: 10px 16px; }
+    .site-header { position: relative; background: #0f3321; padding: 8px 16px 20px; }
     .site-header .brand img { width: min(190px, 52vw); }
     .site-nav { gap: 16px; }
     .site-nav a { font-size: .92rem; }
@@ -455,9 +464,8 @@
 <body>
 
 <header class="site-header">
-  <a class="brand" href="#top" aria-label="Brickfield Garden Properties"><img src="logo.png" width="1000" height="315" alt="Brickfield Garden Properties"></a>
+  <a class="brand" href="#top" aria-label="Brickfield Garden Properties"><img src="logo.png" width="1000" height="270" alt="Brickfield Garden Properties"></a>
   <nav class="site-nav" aria-label="Main">
-    <a href="#units">Properties</a>
     <a href="#" data-contact role="button">Contact</a>
   </nav>
 </header>
@@ -565,12 +573,16 @@
       <h2 id="cmodal-title">Questions or a walk-through?</h2>
       <button class="close" id="cclose" type="button" aria-label="Close">×</button>
     </div>
-    <p>Text or call anytime. If we miss you, leave a message and we'll get back to you as soon as we can.</p>
-    <p class="contact-number" id="cnumber"></p>
-    <div class="apply-choices">
-      <a class="btn btn-primary" id="contact-text" href="#">Send a text</a>
-      <a class="btn btn-primary" id="contact-call" href="#">Call</a>
+    <div class="contact-block">
+      <p class="contact-label">Phone</p>
+      <p class="contact-number" id="cnumber"></p>
+      <p class="contact-sub">Call or text anytime &middot; <a id="contact-call" href="#">Call</a> &middot; <a id="contact-text" href="#">Text</a></p>
     </div>
+    <div class="contact-block">
+      <p class="contact-label">Email</p>
+      <p class="contact-email"><a id="contact-email" href="#"></a></p>
+    </div>
+    <p class="contact-sub contact-miss">If we miss you, leave a message and we'll get back to you as soon as we can.</p>
     <p class="apply-note">Brickfield Garden Properties</p>
   </div>
 </div>
@@ -598,12 +610,17 @@
   /* ====== CONTACT ====== */
   // Number is assembled only when the pop-up opens, so it isn't sitting in the page source.
   var CONTACT_PARTS = ["NTEz", "MzQx", "NTE2", "Mw=="];
+  var EMAIL_PARTS = ["YnJpY2tm", "aWVsZGdh", "cmRlbnNA", "Z21haWwu", "Y29t"];
   function contactDigits() { return atob(CONTACT_PARTS.join("")); }
   function fillContact() {
     var d = contactDigits();
     document.getElementById("cnumber").textContent = "(" + d.slice(0, 3) + ") " + d.slice(3, 6) + "-" + d.slice(6);
     document.getElementById("contact-text").href = "sms:+1" + d;
     document.getElementById("contact-call").href = "tel:+1" + d;
+    var em = atob(EMAIL_PARTS.join(""));
+    var el = document.getElementById("contact-email");
+    el.textContent = em;
+    el.href = "mailto:" + em;
   }
   var cmodal = document.getElementById("cmodal");
   var lastContactTrigger = null;
