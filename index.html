@@ -4,11 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Oakwood Ave</title>
-<meta name="description" content="Take a look at 6035 Oakwood Avenue, watch the video walkthrough, and apply.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Source+Serif+4:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="description" content="Brickfield Garden Properties, 6035 Oakwood Avenue, College Hill. Both units are currently rented. Get notified when one opens.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Brickfield Garden Properties">
 <meta property="og:title" content="Welcome to Oakwood Ave.">
-<meta property="og:description" content="Unit 1 available 11/15/26 · 2 bed, 1 bath · 6035 Oakwood Ave, College Hill. Watch the video walkthrough.">
+<meta property="og:description" content="6035 Oakwood Ave, College Hill. Both units are currently rented. Get notified when one opens up.">
 <meta property="og:url" content="https://brickfieldgardens.com/">
 <meta property="og:image" content="https://brickfieldgardens.com/og-image.jpg">
 <meta property="og:image:width" content="1200">
@@ -16,7 +23,7 @@
 <meta property="og:image:alt" content="Brick duplex at 6035 Oakwood Ave with screened porches and a red front door">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Welcome to Oakwood Ave.">
-<meta name="twitter:description" content="Unit 1 available 11/15/26 · 2 bed, 1 bath · Watch the video walkthrough.">
+<meta name="twitter:description" content="6035 Oakwood Ave, College Hill. Both units are currently rented. Get notified when one opens up.">
 <meta name="twitter:image" content="https://brickfieldgardens.com/og-image.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,32 +46,38 @@
     font-family: var(--sans);
   }
 
-  /* Site header */
-  .site-header {
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    z-index: 5;
-    background: rgba(15,51,33,.95);
-    padding: 10px clamp(20px, 5vw, 72px) 20px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
+  /* Header: slim bar, arch + wordmark left, outlined pills right */
+  .site-header { position: relative; z-index: 8; background: #123421; --cream: #f8f1e0; --gold: #d4b470; }
+  .bar {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    padding: 12px clamp(20px, 5vw, 72px);
+    min-height: 88px;
   }
-  .site-header .brand { display: block; line-height: 0; }
-  .site-header .brand img { display: block; width: clamp(210px, 24vw, 330px); height: auto; }
-  .site-nav { display: flex; align-items: center; gap: clamp(18px, 3vw, 44px); }
-  .site-nav a {
-    color: #fff; text-decoration: none; font: 500 1.05rem/1 var(--sans);
-    padding: 10px 2px; border-bottom: 2px solid transparent;
+  .brand { display: flex; align-items: center; gap: 14px; text-decoration: none; color: var(--cream); }
+  .brand img { display: block; width: 52px; height: auto; flex: none; }
+  .brand .bt { display: block; }
+  .brand .wm-main { display: block; font: 600 clamp(1.05rem, 1.9vw, 1.5rem)/1.05 "Cinzel", Georgia, serif; letter-spacing: .05em; white-space: nowrap; }
+  .brand .wm-sub {
+    display: flex; align-items: center; gap: 10px; margin-top: 5px;
+    font: 500 clamp(.56rem, .85vw, .72rem)/1 "Cinzel", Georgia, serif; letter-spacing: .36em; color: var(--gold);
   }
-  .site-nav a:hover, .site-nav a:focus-visible { border-bottom-color: rgba(255,255,255,.7); }
+  .brand .wm-sub::before, .brand .wm-sub::after { content: ""; height: 1px; flex: 1; min-width: 14px; background: var(--gold); }
+  .pills { display: flex; align-items: center; gap: 12px; }
+  .pills a {
+    color: #fff; text-decoration: none; font: 500 1rem/1 var(--sans);
+    padding: 11px 24px; border: 2px solid rgba(255,255,255,.92); border-radius: 999px;
+    transition: background .15s;
+  }
+  .pills a:hover, .pills a:focus-visible { background: rgba(255,255,255,.14); }
+  #abmodal { z-index: 20; }
+  .about-text p { margin: 0 0 12px; text-align: left; }
+  .about-text { text-align: left; }
 
   /* Hero */
   .hero {
     position: relative;
-    min-height: 100vh;
-    min-height: 100svh;
+    min-height: calc(100vh - 88px);
+    min-height: calc(100svh - 88px);
     display: flex;
     align-items: flex-end;
     overflow: hidden;
@@ -101,12 +114,12 @@
     text-shadow: 0 1px 10px rgba(0,0,0,.5);
   }
   h1 {
-    font-family: var(--sans);
+    font-family: "Source Serif 4", Georgia, serif;
     font-weight: 700;
     font-size: clamp(1.3rem, 6.4vw, 4rem);
     white-space: nowrap;
     line-height: 1;
-    letter-spacing: -0.045em;
+    letter-spacing: -0.02em;
     margin: 0 0 14px;
     text-shadow: 0 2px 18px rgba(0,0,0,.45);
   }
@@ -116,7 +129,7 @@
     flex-wrap: wrap;
     margin: 0 0 26px;
     padding: 0;
-    font: 500 clamp(1rem, 2.2vw, 1.3rem)/1.5 var(--sans);
+    font: 400 clamp(1rem, 2.2vw, 1.3rem)/1.5 "Source Serif 4", Georgia, serif;
     text-shadow: 0 1px 12px rgba(0,0,0,.6);
   }
   .chips li:not(:last-child)::after {
@@ -154,11 +167,12 @@
   .units {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    max-width: 1180px;
+    gap: clamp(12px, 2vw, 28px);
+    max-width: none;
+    width: 100%;
     align-items: stretch;
   }
-  @media (max-width: 1280px) {
+  @media (max-width: 1100px) {
     .units { grid-template-columns: 1fr; max-width: 600px; }
   }
   .unit {
@@ -276,6 +290,12 @@
   }
   .unit.taken .btn-primary,
   .unit.taken .btn-primary:hover { background: rgba(120,116,108,.16); border-color: #b3aea6; color: #8f8b84; }
+  /* Notify button inside greyed cards stays active */
+  .unit.taken .btn.notify,
+  .unit.taken .btn.notify:hover {
+    background: #123421; color: #f8f1e0; border-color: #123421; cursor: pointer; font-weight: 700;
+  }
+  .unit.taken .btn.notify:hover { background: #1d4a31; border-color: #1d4a31; }
   .btn-outline {
     background: transparent;
     color: #1b1a18;
@@ -454,20 +474,29 @@
     .hero img { object-fit: cover; object-position: 50% 50%; transform: scale(1.14); transform-origin: 30% 85%; }
     .hero::after { display: none; }
     .hero-content { padding: 22px 18px 40px; }
-    .site-header { position: relative; background: #0f3321; padding: 8px 16px 20px; }
-    .site-header .brand img { width: min(190px, 52vw); }
-    .site-nav { gap: 16px; }
-    .site-nav a { font-size: .92rem; }
+    .bar { padding: 10px 14px; min-height: 0; gap: 10px; }
+    .brand { gap: 10px; }
+    .brand img { width: 40px; }
+    .brand .wm-main { font-size: .98rem; }
+    .brand .wm-sub { font-size: .52rem; letter-spacing: .3em; gap: 6px; }
+    .pills .hide-m { display: none; }
+    .pills a { font-size: .9rem; padding: 9px 18px; }
   }
 </style>
 </head>
 <body>
-
 <header class="site-header">
-  <a class="brand" href="#top" aria-label="Brickfield Garden Properties"><img src="logo.png" width="1000" height="270" alt="Brickfield Garden Properties"></a>
-  <nav class="site-nav" aria-label="Main">
-    <a href="#" data-contact role="button">Contact</a>
-  </nav>
+  <div class="bar">
+    <a class="brand" href="#top" aria-label="Brickfield Garden Properties">
+      <img src="arch.png" width="360" height="426" alt="">
+      <span class="bt"><span class="wm-main">BRICKFIELD GARDEN</span><span class="wm-sub">PROPERTIES</span></span>
+    </a>
+    <nav class="pills" aria-label="Main">
+      <a class="hide-m" href="#units">Properties</a>
+      <a class="hide-m" href="#" data-about role="button">About</a>
+      <a href="#" data-contact role="button">Contact</a>
+    </nav>
+  </div>
 </header>
 
 <main class="hero" id="top">
@@ -500,7 +529,7 @@
         <p class="contact-line">Questions or want to see it? <a href="#" data-contact role="button">Text or call us</a></p>
       </div>
 
-      <div class="unit taken" aria-disabled="true">
+      <div class="unit taken">
         <span class="badge badge-taken">Currently rented</span>
         <p class="unit-line">
           <span class="unit-name">Unit 2</span>
@@ -510,7 +539,7 @@
         <div class="actions">
           <button class="btn btn-primary" type="button" disabled>▶ Watch the walkthrough</button>
           <button class="btn btn-outline" type="button" disabled>Photo gallery</button>
-          <button class="btn btn-outline" type="button" disabled>Apply Now</button>
+          <a class="btn btn-outline notify" href="#" role="button">Get notified</a>
         </div>
       </div>
     </div>
@@ -567,6 +596,19 @@
   </div>
 </div>
 
+<div class="modal" id="abmodal" role="dialog" aria-modal="true" aria-labelledby="abmodal-title" aria-hidden="true">
+  <div class="panel apply-panel">
+    <div class="panel-head">
+      <h2 id="abmodal-title">About Brickfield Garden Properties</h2>
+      <button class="close" id="abclose" type="button" aria-label="Close">×</button>
+    </div>
+    <div class="about-text">
+      <p>Brickfield Garden Properties looks after 6035 Oakwood Avenue, a brick duplex on a wide, tree-lined street in College Hill, Cincinnati, set on a half-acre lot.</p>
+      <p>Each apartment is a home we're proud of. If you have questions or want to see a unit in person, we're glad to help.</p>
+    </div>
+  </div>
+</div>
+
 <div class="modal" id="cmodal" role="dialog" aria-modal="true" aria-labelledby="cmodal-title" aria-hidden="true">
   <div class="panel apply-panel">
     <div class="panel-head">
@@ -597,7 +639,31 @@
   // Where people can apply
   var ZILLOW_URL     = "https://www.zillow.com/homedetails/6035-Oakwood-Ave-1-Cincinnati-OH-45224/466318567_zpid/?view=public";
   var APARTMENTS_URL = "https://www.apartments.com/6035-oakwood-ave-cincinnati-oh/bf8jth8/";
+  // Set to true once the Unit 1 lease is signed: greys out the card and swaps Apply for "Get notified"
+  var UNIT1_LEASED   = true;
+  // Link to the "tell me when a unit opens" Google Form. Leave empty to open the Text/Call pop-up instead.
+  var NOTIFY_URL     = "";
   /* ==================================== */
+
+  if (UNIT1_LEASED) {
+    var u1 = document.querySelector(".unit.open");
+    u1.className = "unit taken";
+    var b1 = u1.querySelector(".badge");
+    b1.className = "badge badge-taken";
+    b1.textContent = "Currently rented";
+    var cl = u1.querySelector(".contact-line");
+    if (cl) cl.remove();
+    ["watch", "photos"].forEach(function (id) { var el = document.getElementById(id); if (el) el.disabled = true; });
+    document.querySelectorAll("[data-apply]").forEach(function (a) {
+      a.removeAttribute("data-apply");
+      a.classList.add("notify");
+      a.textContent = "Get notified";
+    });
+  }
+  document.querySelectorAll(".notify").forEach(function (a) {
+    if (NOTIFY_URL) { a.href = NOTIFY_URL; a.target = "_blank"; a.rel = "noopener"; }
+    else { a.setAttribute("data-contact", ""); }
+  });
 
   var modal = document.getElementById("modal");
   var player = document.getElementById("player");
@@ -606,6 +672,30 @@
   document.getElementById("apply-zillow").href = ZILLOW_URL;
   document.getElementById("apply-apts").href = APARTMENTS_URL;
 
+
+  /* ====== ABOUT ====== */
+  var abmodal = document.getElementById("abmodal");
+  var lastAboutTrigger = null;
+  function openAbout(e) {
+    e.preventDefault();
+    lastAboutTrigger = e.currentTarget;
+    abmodal.classList.add("open");
+    abmodal.setAttribute("aria-hidden", "false");
+    document.getElementById("abclose").focus();
+    document.body.style.overflow = "hidden";
+  }
+  function closeAbout(byKey) {
+    abmodal.classList.remove("open");
+    abmodal.setAttribute("aria-hidden", "true");
+    if (!document.querySelector("#modal.open, #gmodal.open, #amodal.open, #cmodal.open")) document.body.style.overflow = "";
+    if (byKey === true && lastAboutTrigger) lastAboutTrigger.focus();
+  }
+  document.querySelectorAll("[data-about]").forEach(function (a) { a.addEventListener("click", openAbout); });
+  document.getElementById("abclose").addEventListener("click", function () { closeAbout(); });
+  abmodal.addEventListener("click", function (e) { if (e.target === abmodal) closeAbout(); });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && abmodal.classList.contains("open")) { closeAbout(true); e.stopImmediatePropagation(); }
+  }, true);
 
   /* ====== CONTACT ====== */
   // Number is assembled only when the pop-up opens, so it isn't sitting in the page source.
