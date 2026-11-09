@@ -280,16 +280,16 @@
     box-shadow: 0 8px 30px rgba(0,0,0,.25);
   }
   .unit.taken .badge-taken { background: #8f8b84; color: #fff; }
-  .unit.taken .btn,
-  .unit.taken .btn:hover {
+  .unit.taken .btn:disabled,
+  .unit.taken .btn:disabled:hover {
     background: transparent;
     color: #8f8b84;
     border-color: #b3aea6;
     cursor: not-allowed;
     box-shadow: none;
   }
-  .unit.taken .btn-primary,
-  .unit.taken .btn-primary:hover { background: rgba(120,116,108,.16); border-color: #b3aea6; color: #8f8b84; }
+  .unit.taken .btn-primary:disabled,
+  .unit.taken .btn-primary:disabled:hover { background: rgba(120,116,108,.16); border-color: #b3aea6; color: #8f8b84; }
   /* Notify button inside greyed cards stays active */
   .unit.taken .btn.notify,
   .unit.taken .btn.notify:hover {
@@ -480,7 +480,12 @@
     .brand .wm-main { font-size: .98rem; }
     .brand .wm-sub { font-size: .52rem; letter-spacing: .3em; gap: 6px; }
     .pills .hide-m { display: none; }
-    .pills a { font-size: .9rem; padding: 9px 18px; }
+    .pills a { font-size: .82rem; padding: 7px 11px; white-space: nowrap; }
+    .pills { gap: 6px; }
+    .brand .wm-main { font-size: .72rem; letter-spacing: .02em; }
+    .brand { min-width: 0; gap: 8px; }
+    .bar { gap: 8px; }
+    .brand img { width: 34px; }
   }
 </style>
 </head>
@@ -492,7 +497,7 @@
       <span class="bt"><span class="wm-main">BRICKFIELD GARDEN</span><span class="wm-sub">PROPERTIES</span></span>
     </a>
     <nav class="pills" aria-label="Main">
-      <a class="hide-m" href="#units">Properties</a>
+      <a class="notify" href="#" role="button">Get notified</a>
       <a class="hide-m" href="#" data-about role="button">About</a>
       <a href="#" data-contact role="button">Contact</a>
     </nav>
@@ -642,7 +647,7 @@
   // Set to true once the Unit 1 lease is signed: greys out the card and swaps Apply for "Get notified"
   var UNIT1_LEASED   = true;
   // Link to the "tell me when a unit opens" Google Form. Leave empty to open the Text/Call pop-up instead.
-  var NOTIFY_URL     = "";
+  var NOTIFY_URL     = "https://docs.google.com/forms/d/e/1FAIpQLSfvY5VWJmAFQ5mglyKlk5ExXdeIEKHuRgCeieimy4kk1EsfXw/viewform";
   /* ==================================== */
 
   if (UNIT1_LEASED) {
@@ -653,7 +658,6 @@
     b1.textContent = "Currently rented";
     var cl = u1.querySelector(".contact-line");
     if (cl) cl.remove();
-    ["watch", "photos"].forEach(function (id) { var el = document.getElementById(id); if (el) el.disabled = true; });
     document.querySelectorAll("[data-apply]").forEach(function (a) {
       a.removeAttribute("data-apply");
       a.classList.add("notify");
